@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2BBF994F-BCF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BECDDC84-439C-4B64-94C0-B4654948140D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymManagement.Domain", "GymManagement.Domain\GymManagement.Domain.csproj", "{0E018BD8-26CD-4363-B9B1-9DF64559CEFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymManagement.Domain", "GymManagement.Domain\GymManagement.Domain.csproj", "{0E018BD8-26CD-4363-B9B1-9DF64559CEFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6DFB6DFF-F82F-4214-9981-B4E7AC1F9205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymManagement.Application", "GymManagement.Application\GymManagement.Application.csproj", "{30277E89-D455-4A44-8804-4C04737CA5D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymManagement.Application", "GymManagement.Application\GymManagement.Application.csproj", "{30277E89-D455-4A44-8804-4C04737CA5D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymManagement.Infrastructure", "GymManagement.Infrastructure\GymManagement.Infrastructure.csproj", "{A73F9D36-3153-41BD-8499-AEB6CB04F32C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymManagement.Infrastructure", "GymManagement.Infrastructure\GymManagement.Infrastructure.csproj", "{A73F9D36-3153-41BD-8499-AEB6CB04F32C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8904FAF4-D94F-4317-8C96-1B6B10AFBA2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymManagement.WebAPI", "GymManagement.WebAPI\GymManagement.WebAPI.csproj", "{2F5D20F4-A687-4D9D-AA20-8865B9BD9435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymManagement.WebAPI", "GymManagement.WebAPI\GymManagement.WebAPI.csproj", "{2F5D20F4-A687-4D9D-AA20-8865B9BD9435}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
