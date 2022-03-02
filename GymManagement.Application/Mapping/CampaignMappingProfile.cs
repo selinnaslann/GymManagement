@@ -13,7 +13,9 @@ namespace GymManagement.Application.Mapping
     {
         public CampaignMappingProfile()
         {
-            CreateMap<Campaign, CampaignQueryViewModel>();
+            CreateMap<Campaign, CampaignQueryViewModel>().ReverseMap();
+            CreateMap<Campaign, CampaignCommandViewModel>().ReverseMap();
+
         }
     }
 }

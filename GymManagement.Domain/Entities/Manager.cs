@@ -8,7 +8,6 @@ namespace GymManagement.Domain.Entities
         public int EmployeeDetailId { get; set; }
         public EmployeeDetail EmployeeDetail { get; set; }
         public List<Trainer> Trainers { get; set; }
-        public List<Worker> Workers { get; set; }
 
     }
 }
