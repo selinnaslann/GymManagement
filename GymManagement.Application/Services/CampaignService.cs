@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.SymbolStore;
 
 namespace GymManagement.Application.Services
 {
@@ -23,10 +24,10 @@ namespace GymManagement.Application.Services
 
         public bool Create(CampaignCommandViewModel model)
         {
-            var campaign= _mapper.Map<Campaign>(model);
+            var campaign = _mapper.Map<Campaign>(model);
             _unitOfWork.Campaigns.Create(campaign);
-                
-            if(_unitOfWork.SaveChanges())
+
+            if (_unitOfWork.SaveChanges())
             {
                 return true;
             }
@@ -35,8 +36,15 @@ namespace GymManagement.Application.Services
 
         public bool Delete(int id)
         {
-            var campaign= _unitOfWork.Campaigns.GetById(id);
-            _unitOfWork.Campaigns.Delete(campaign);
+            var campaign = _unitOfWork.Campaigns.GetById(id);
+            if (campaign is null)
+            {
+                throw new InvalidOperationException("Campaign  not found");
+            }
+
+            campaign.IsDeleted = true;
+            _unitOfWork.Campaigns.Update(campaign);
+
             if (_unitOfWork.SaveChanges())
             {
                 return true;
@@ -52,15 +60,21 @@ namespace GymManagement.Application.Services
 
         public CampaignQueryViewModel GetById(int id)
         {
-            var campaign= _unitOfWork.Campaigns.GetById(id);
+            var campaign = _unitOfWork.Campaigns.GetById(id);
             return _mapper.Map<CampaignQueryViewModel>(campaign);
 
         }
 
-        public bool Update(CampaignCommandViewModel model)
+        public bool Update(CampaignCommandViewModel model, int id)
         {
-            var campaign = _mapper.Map<Campaign>(model);
-            _unitOfWork.Campaigns.Create(campaign);
+            var campaign = _unitOfWork.Campaigns.GetById(id);
+            if (campaign is null)
+            {
+                throw new InvalidOperationException("Campaign is not found");
+            }
+
+            var vmModel = _mapper.Map<Campaign>(model);
+            _unitOfWork.Campaigns.Update(vmModel);
 
             if (_unitOfWork.SaveChanges())
             {

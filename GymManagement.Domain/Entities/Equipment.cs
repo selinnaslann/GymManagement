@@ -10,5 +10,6 @@ namespace GymManagement.Domain.Entities
         public bool IsActive { get; set; }
         public int TrainerId { get; set; }
         public Trainer Trainer { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
