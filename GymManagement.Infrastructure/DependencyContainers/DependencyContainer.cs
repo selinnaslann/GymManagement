@@ -4,6 +4,8 @@ using GymManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using GymManagement.Application.Interfaces.UnitOfWorks;
+using GymManagement.Infrastructure.UnitOfWorks;
 
 namespace GymManagement.Infrastructure.DependencyContainers
 {
@@ -22,6 +24,7 @@ namespace GymManagement.Infrastructure.DependencyContainers
             services.AddScoped<IMissionRepository, MissionRepository>();
             services.AddScoped<ITrainerRepository, TrainerRepository>();
             services.AddScoped<IWorkerContractRepository, WorkerContractRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

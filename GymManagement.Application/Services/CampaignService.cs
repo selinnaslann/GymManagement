@@ -17,9 +17,11 @@ namespace GymManagement.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CampaignService(IUnitOfWork unitOfWork)
+
+        public CampaignService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public bool Create(CampaignCommandViewModel model)
@@ -55,7 +57,8 @@ namespace GymManagement.Application.Services
         public List<CampaignQueryViewModel> GetAll()
         {
             var campaigns = _unitOfWork.Campaigns.GetAll();
-            return _mapper.Map<List<CampaignQueryViewModel>>(campaigns);
+            var result =  _mapper.Map<List<CampaignQueryViewModel>>(campaigns);
+            return result;
         }
 
         public CampaignQueryViewModel GetById(int id)
@@ -74,6 +77,7 @@ namespace GymManagement.Application.Services
             }
 
             var vmModel = _mapper.Map<Campaign>(model);
+            vmModel.Id = id;
             _unitOfWork.Campaigns.Update(vmModel);
 
             if (_unitOfWork.SaveChanges())

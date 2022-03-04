@@ -68,6 +68,7 @@ namespace GymManagement.Application.Services
             }
             
             equipment.MaintenancePeriod = equipment.CreatedDate.AddMonths(model.Duration);
+            equipment.Id = id;
             _unitOfWork.Equipments.Update(equipment);
 
             if (_unitOfWork.SaveChanges())

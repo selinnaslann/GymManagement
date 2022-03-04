@@ -14,6 +14,7 @@ namespace GymManagement.Application.Interfaces.UnitOfWorks
         IEquipmentRepository Equipments { get; }
         IExerciseProgramRepository ExercisePrograms { get; }
         IManagerRepository Managers { get; }
+        ITrainerRepository Trainers { get; }
 
         IMissionRepository Missions { get; }
         IWorkerContractRepository WorkerContracts { get; }
