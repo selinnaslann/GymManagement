@@ -1,5 +1,7 @@
-﻿using GymManagement.Application.Interfaces.ServiceInterfaces;
+﻿using GymManagement.Application.Extensions;
+using GymManagement.Application.Interfaces.ServiceInterfaces;
 using GymManagement.Application.Interfaces.UnitOfWorks;
+using GymManagement.Application.ViewModels.TrainerViewModel;
 using GymManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,21 +19,25 @@ namespace GymManagement.Application.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public List<Trainer> GetAll()
-        {
-           return _unitOfWork.Trainers.GetAll();
-        }
 
-        public bool AddMemberExerciseProgram(int memberId)
+        public List<TrainerQueryViewModel> GetTrainersWithEmployeeDetail()
         {
-            throw new NotImplementedException();
+            var result = _unitOfWork.Trainers.GetTrainersWithEmployeeDetail();
+            return result;
         }
 
         public bool EquipmentMaintenanceControl(int equipmentId)
         {
-            throw new NotImplementedException();
+            var equipment = _unitOfWork.Equipments.GetById(equipmentId);
+
+            equipment.IfIsNullThrowNotFoundException("Equipment", equipmentId);
+
+            equipment.IsActive = false;
+            _unitOfWork.Equipments.Update(equipment);
+
+            return _unitOfWork.SaveChanges();
         }
 
-       
+
     }
 }

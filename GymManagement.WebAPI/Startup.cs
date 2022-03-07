@@ -33,6 +33,9 @@ namespace GymManagement.WebAPI
             services.AddInfrastructureServices(Configuration);
             services.AddScoped<ICampaignService, CampaignService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+            services.AddScoped<IExerciseProgramService, ExerciseProgramService>();
+            services.AddScoped<ITrainerService, TrainerService>();
+            services.AddScoped<IManagerService, ManagerService>();
 
             services.AddSwaggerGen(c =>
             {

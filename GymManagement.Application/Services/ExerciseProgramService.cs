@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GymManagement.Application.Extensions;
 using GymManagement.Application.Interfaces.ServiceInterfaces;
 using GymManagement.Application.Interfaces.UnitOfWorks;
 using GymManagement.Application.ViewModels.ExerciseProgramViewModel;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.Application.Services
 {
-    public class ExerciseProgramService:IExerciseProgramService
+    public class ExerciseProgramService : IExerciseProgramService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -41,14 +42,10 @@ namespace GymManagement.Application.Services
 
         public bool Update(ExerciseProgramCommandViewModel model, int id)
         {
-
-
             var getExerciseProgram = _unitOfWork.ExercisePrograms.GetById(id);
 
-            if (getExerciseProgram is null)
-            {
-                throw new InvalidOperationException("ExerciseProgram not found");
-            }
+            getExerciseProgram.IfIsNullThrowNotFoundException("Exerciese Program", id);
+
 
             var vmModel = _mapper.Map<ExerciseProgram>(model);
             vmModel.Id = id;
@@ -61,6 +58,7 @@ namespace GymManagement.Application.Services
         {
             var exerciseProgram = _unitOfWork.ExercisePrograms.GetById(id);
 
+            exerciseProgram.IfIsNullThrowNotFoundException("Exerciese Program", id);
             exerciseProgram.IsDeleted = true;
             _unitOfWork.ExercisePrograms.Update(exerciseProgram);
             return _unitOfWork.SaveChanges();
