@@ -1,5 +1,6 @@
 ﻿using GymManagement.Application.Interfaces.ServiceInterfaces;
 using GymManagement.Application.ViewModels.TrainerViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace GymManagement.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class ManagerController : ControllerBase
     {
         private readonly IManagerService _managerService;
@@ -30,6 +32,7 @@ namespace GymManagement.WebAPI.Controllers
         }
 
         [HttpPut("{trainerId}")]
+
         public IActionResult AddMissionToTrainer([FromQuery] int missionId, int trainerId)
         {
             //Buraya bakılacak...

@@ -36,6 +36,7 @@ namespace GymManagement.WebAPI
             services.AddScoped<IExerciseProgramService, ExerciseProgramService>();
             services.AddScoped<ITrainerService, TrainerService>();
             services.AddScoped<IManagerService, ManagerService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +55,7 @@ namespace GymManagement.WebAPI
             }
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

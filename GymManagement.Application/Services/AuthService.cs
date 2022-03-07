@@ -5,7 +5,7 @@ using GymManagement.Application.ViewModels.MemberViewModel;
 using GymManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
-
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GymManagement.Application.Services
@@ -15,16 +15,17 @@ namespace GymManagement.Application.Services
         private readonly UserManager<Member> _userManager;
         private readonly SignInManager<Member> _signInManager;
         private readonly IMapper _mapper;
+        private readonly TokenGenerator _tokenGenerator;
+       private readonly RoleGenerator _roleGenerator;
 
-        public AuthService(SignInManager<Member> signInManager, UserManager<Member> userManager, IMapper mapper)
+        public AuthService(SignInManager<Member> signInManager, UserManager<Member> userManager, IMapper mapper, TokenGenerator tokenGenerator, RoleGenerator roleGenerator)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
+            _tokenGenerator = tokenGenerator;
+            _roleGenerator = roleGenerator;
         }
-
-        
-
         public async Task<bool> Register(MemberRegisterViewModel registerViewModel)
         {
             var member = _mapper.Map<Member>(registerViewModel);
@@ -34,6 +35,7 @@ namespace GymManagement.Application.Services
                 throw new InvalidOperationException("Email Mevcuttur.");
             }
             var result = await _userManager.CreateAsync(member, registerViewModel.Password);
+            _roleGenerator.CreateRoles();
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(member, "Member");
@@ -56,7 +58,9 @@ namespace GymManagement.Application.Services
                 throw new InvalidOperationException("Şifre yanlış.");
             }
             var userRoles = await _userManager.GetRolesAsync(memberFind);
-            return null;
+
+            var token = _tokenGenerator.CreateToken(memberFind, userRoles.ToList());
+            return token;
         }
 
        
