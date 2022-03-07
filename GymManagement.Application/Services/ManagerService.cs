@@ -47,18 +47,8 @@ namespace GymManagement.Application.Services
 
         public bool AddMissionToTrainer(int missionId, int trainerId)
         {
-            var trainer = _unitOfWork.Trainers.GetById(trainerId);
-
-            trainer.IfIsNullThrowNotFoundException("Trainer", trainerId);
-
-            var mission = _unitOfWork.Missions.GetById(missionId);
-
-            mission.IfIsNullThrowNotFoundException("Mission", trainerId);
-
-            //Bu kısma daha sonra bakılacak!!! HATA VAR !!!
-            mission.Trainers.Add(trainer);
-            _unitOfWork.Missions.Update(mission);
-            return _unitOfWork.SaveChanges();
+            _unitOfWork.Managers.AddMissionToTrainer(missionId, trainerId);
+            return true;
         }
     }
 }
