@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using GymManagement.Application.Extensions;
 using GymManagement.Application.Interfaces.ServiceInterfaces;
 using GymManagement.Application.Interfaces.UnitOfWorks;
+using GymManagement.Application.Validations;
 using GymManagement.Application.ViewModels.ExerciseProgramViewModel;
 using GymManagement.Domain.Entities;
 using System;
@@ -33,6 +35,9 @@ namespace GymManagement.Application.Services
 
         public bool Create(ExerciseProgramCommandViewModel model)
         {
+            var validator = new ExerciseProgramValidator();
+            validator.ValidateAndThrow(model);
+
             var exerciseProgram = _mapper.Map<ExerciseProgram>(model);
 
             _unitOfWork.ExercisePrograms.Create(exerciseProgram);
@@ -42,9 +47,12 @@ namespace GymManagement.Application.Services
 
         public bool Update(ExerciseProgramCommandViewModel model, int id)
         {
+            var validator = new ExerciseProgramValidator();
+            validator.ValidateAndThrow(model);
+
             var getExerciseProgram = _unitOfWork.ExercisePrograms.GetById(id);
 
-            getExerciseProgram.IfIsNullThrowNotFoundException("Exerciese Program", id);
+            getExerciseProgram.IfIsNullThrowNotFoundException("Exercise Program", id);
 
 
             var vmModel = _mapper.Map<ExerciseProgram>(model);
@@ -58,7 +66,7 @@ namespace GymManagement.Application.Services
         {
             var exerciseProgram = _unitOfWork.ExercisePrograms.GetById(id);
 
-            exerciseProgram.IfIsNullThrowNotFoundException("Exerciese Program", id);
+            exerciseProgram.IfIsNullThrowNotFoundException("Exercise Program", id);
             exerciseProgram.IsDeleted = true;
             _unitOfWork.ExercisePrograms.Update(exerciseProgram);
             return _unitOfWork.SaveChanges();

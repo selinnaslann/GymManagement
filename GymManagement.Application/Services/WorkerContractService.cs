@@ -1,6 +1,8 @@
-﻿using GymManagement.Application.Extensions;
+﻿using FluentValidation;
+using GymManagement.Application.Extensions;
 using GymManagement.Application.Interfaces.ServiceInterfaces;
 using GymManagement.Application.Interfaces.UnitOfWorks;
+using GymManagement.Application.Validations;
 using GymManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,9 @@ namespace GymManagement.Application.Services
 
         public bool Create(WorkerContract model)
         {
+            var validotor = new WorkerContractValidator();
+            validotor.ValidateAndThrow(model);
+
             _unitOfWork.WorkerContracts.Create(model);
 
             return _unitOfWork.SaveChanges();
@@ -38,6 +43,9 @@ namespace GymManagement.Application.Services
 
         public bool Update(WorkerContract model, int id)
         {
+            var validotor = new WorkerContractValidator();
+            validotor.ValidateAndThrow(model);
+
             _unitOfWork.WorkerContracts.Update(model);
 
             return _unitOfWork.SaveChanges();

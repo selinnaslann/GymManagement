@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.SymbolStore;
 using GymManagement.Application.Extensions;
+using GymManagement.Application.Validations;
+using FluentValidation;
 
 namespace GymManagement.Application.Services
 {
@@ -37,17 +39,20 @@ namespace GymManagement.Application.Services
 
         public bool Create(CampaignCommandViewModel model)
         {
+            var validator = new CampaignValidator();
+
+            validator.ValidateAndThrow(model);
+
             var campaign = _mapper.Map<Campaign>(model);
             _unitOfWork.Campaigns.Create(campaign);
 
-            if (_unitOfWork.SaveChanges())
-            {
-                return true;
-            }
-            return false;
+            return _unitOfWork.SaveChanges();
         }
         public bool Update(CampaignCommandViewModel model, int id)
         {
+            var validator = new CampaignValidator();
+            validator.ValidateAndThrow(model);
+
             var campaign = _unitOfWork.Campaigns.GetById(id);
 
             campaign.IfIsNullThrowNotFoundException("Campaign", id);
@@ -57,6 +62,8 @@ namespace GymManagement.Application.Services
             _unitOfWork.Campaigns.Update(vmModel);
 
             return _unitOfWork.SaveChanges();
+
+
         }
         public bool Delete(int id)
         {
