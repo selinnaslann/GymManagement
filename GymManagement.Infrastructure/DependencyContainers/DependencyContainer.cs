@@ -20,7 +20,7 @@ namespace GymManagement.Infrastructure.DependencyContainers
         {
 
             services.AddDbContext<GymManagementDbContext>(
-                options => options.UseSqlServer(configuration.GetConnectionString("mssql")));
+                options => options.UseSqlServer(configuration.GetConnectionString("mssql<")));
             services.AddScoped<ICampaignRepository, CampaignRepository>();
             services.AddScoped<IEmployeeDetailRepository, EmployeeDetailsRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
